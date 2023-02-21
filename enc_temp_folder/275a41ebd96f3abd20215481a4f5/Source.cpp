@@ -23,16 +23,21 @@ private:
 };
 
 Matrix::Matrix(int n, int m, double** arr) {
-	height = n;
-	width = m;
-	matrix = new double* [height];
-	for (int i = 0; i < height; i++) {
-		matrix[i] = new double[width];
-	}
-	for (int i = 0; i < height; i++) {
-		for (int j = 0; j < width; j++) {
-			matrix[i][j] = arr[i][j];
+	try {
+		height = n;
+		width = m;
+		matrix = new double* [height];
+		for (int i = 0; i < height; i++) {
+			matrix[i] = new double[width];
 		}
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				matrix[i][j] = arr[i][j];
+			}
+		}
+	}
+	catch (double){
+		cout << "Не удалось вывести матрицу" << endl;
 	}
 }
 
@@ -119,10 +124,11 @@ double** Matrix::operator-(Matrix& obj) {
 }
 
 double** Matrix::operator*(Matrix& obj) {
-	if (width != obj.height) {
-		cout << "Умножение не возможно" << endl;
-	}
-	else {
+	int a = -1;
+	try {
+		if (height != obj.width) {
+			throw int(a);
+		}
 		double** arr = new double* [height];
 		for (int i = 0; i < height; i++) {
 			arr[i] = new double[obj.width];
@@ -139,6 +145,9 @@ double** Matrix::operator*(Matrix& obj) {
 			}
 		}
 		return arr;
+	}
+	catch (int a) {
+		cout << "Ошибка, умножение невозможно!" << endl;
 	}
 }
 
