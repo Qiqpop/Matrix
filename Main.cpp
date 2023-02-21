@@ -35,6 +35,10 @@ int main() {
 			}
 		}
 		Matrix matrix2(n, m, arr);
+		for (int i = 0; i < n; i++) {
+			delete[]arr[i];
+		}
+		delete[]arr;
 		Matrix matrix3(n3, m3, matrix1 * matrix2);
 		matrix3.printMatrix();
 		return 0;

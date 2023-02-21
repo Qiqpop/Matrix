@@ -1,15 +1,19 @@
 #include "Matrix.h"
 #include <iostream>
 
-using namespace std;
+double** createArr(int n, int m)
+{
+	double** arr = new double* [n];
+	for (int i = 0; i < n; i++) {
+		arr[i] = new double[m];
+	}
+	return arr;
+}
 
 Matrix::Matrix(int n, int m, double** arr) {
 	height = n;
 	width = m;
-	matrix = new double* [height];
-	for (int i = 0; i < height; i++) {
-		matrix[i] = new double[width];
-	}
+	matrix = createArr(height, width);
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			matrix[i][j] = arr[i][j];
@@ -20,10 +24,7 @@ Matrix::Matrix(int n, int m, double** arr) {
 Matrix::Matrix(Matrix& obj) {
 	height = obj.height;
 	width = obj.width;
-	matrix = new double* [height];
-	for (int i = 0; i < height; i++) {
-		matrix[i] = new double[width];
-	}
+	matrix = createArr(height, width);
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			matrix[i][j] = obj.matrix[i][j];
@@ -39,32 +40,28 @@ Matrix::~Matrix() {
 }
 
 void Matrix::printMatrix() {
-	cout << endl;
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			cout << matrix[i][j] << ' ';
+			std::cout << matrix[i][j] << ' ';
 		}
-		cout << endl;
+		std::cout << std::endl;
 	}
 }
 
 void Matrix::rearrangingColumns(int a, int b) {
 	for (int i = 0; i < height; i++) {
-		swap(matrix[i][a], matrix[i][b]);
+		std::swap(matrix[i][a], matrix[i][b]);
 	}
 }
 
 void Matrix::rearrangingRows(int a, int b) {
 	for (int i = 0; i < width; i++) {
-		swap(matrix[a][i], matrix[b][i]);
+		std::swap(matrix[a][i], matrix[b][i]);
 	}
 }
 
 double** Matrix::transposition() {
-	double** arr = new double* [width];
-	for (int i = 0; i < width; i++) {
-		arr[i] = new double[height];
-	}
+	double** arr = createArr(width, height);
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
 			arr[i][j] = matrix[j][i];
@@ -74,10 +71,7 @@ double** Matrix::transposition() {
 }
 
 double** Matrix::operator+(Matrix& obj) {
-	double** arr = new double* [height];
-	for (int i = 0; i < height; i++) {
-		arr[i] = new double[width];
-	}
+	double** arr = createArr(height, width);
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			arr[i][j] = matrix[i][j] + obj.matrix[i][j];
@@ -87,10 +81,7 @@ double** Matrix::operator+(Matrix& obj) {
 }
 
 double** Matrix::operator-(Matrix& obj) {
-	double** arr = new double* [height];
-	for (int i = 0; i < height; i++) {
-		arr[i] = new double[width];
-	}
+	double** arr = createArr(height, width);
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			arr[i][j] = matrix[i][j] - obj.matrix[i][j];
@@ -101,14 +92,11 @@ double** Matrix::operator-(Matrix& obj) {
 
 double** Matrix::operator*(Matrix& obj) {
 	if (width != obj.height) {
-		cout << "Умножение не возможно" << endl;
+		std::cout << "Умножение не возможно" << std::endl;
 		throw - 1;
 	}
 	else {
-		double** arr = new double* [height];
-		for (int i = 0; i < height; i++) {
-			arr[i] = new double[obj.width];
-		}
+		double** arr = createArr(height, obj.width);
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < obj.width; j++) {
 				double res = 0;
@@ -126,10 +114,7 @@ double** Matrix::operator*(Matrix& obj) {
 
 double** Matrix::operator*(double x)
 {
-	double** arr = new double* [height];
-	for (int i = 0; i < height; i++) {
-		arr[i] = new double[width];
-	}
+	double** arr = createArr(height, width);
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
 			arr[i][j] = matrix[i][j] * x;
@@ -137,4 +122,3 @@ double** Matrix::operator*(double x)
 	}
 	return arr;
 }
-

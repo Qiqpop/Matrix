@@ -1,6 +1,7 @@
 class Matrix
 {
 public:
+	friend double** createArr(int n, int m);
 	Matrix(int n, int m, double** arr);
 	Matrix(Matrix& obj);
 	~Matrix();
