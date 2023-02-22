@@ -10,6 +10,18 @@ double** createArr(int n, int m)
 	return arr;
 }
 
+Matrix& operator*(double x, Matrix& obj)
+{
+	double** arr = createArr(obj.height, obj.width);
+	for (int i = 0; i < obj.height; i++) {
+		for (int j = 0; j < obj.width; j++) {
+			arr[i][j] = obj.matrix[i][j] * x;
+		}
+	}
+	Matrix matrix(obj.height, obj.width, arr);
+	return matrix;
+}
+
 Matrix::Matrix(int n, int m, double** arr) {
 	height = n;
 	width = m;
@@ -32,12 +44,12 @@ Matrix::Matrix(Matrix& obj) {
 	}
 }
 
-Matrix::~Matrix() {
-	for (int i = 0; i < height; i++) {
-		delete[]matrix[i];
-	}
-	delete[]matrix;
-}
+//Matrix::~Matrix() {
+//	for (int i = 0; i < height; i++) {
+//		delete[]matrix[i];
+//	}
+//	delete[]matrix;
+//}
 
 void Matrix::printMatrix() {
 	for (int i = 0; i < height; i++) {
@@ -60,37 +72,40 @@ void Matrix::rearrangingRows(int a, int b) {
 	}
 }
 
-double** Matrix::transposition() {
+Matrix& Matrix::transposition() {
 	double** arr = createArr(width, height);
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
-			arr[i][j] = matrix[j][i];
+			arr[i][j] = this->matrix[j][i];
 		}
 	}
-	return arr;
+	Matrix matrix(width, height, arr);
+	return matrix;
 }
 
-double** Matrix::operator+(Matrix& obj) {
+Matrix& Matrix::operator+(Matrix& obj) {
 	double** arr = createArr(height, width);
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			arr[i][j] = matrix[i][j] + obj.matrix[i][j];
+			arr[i][j] = this->matrix[i][j] + obj.matrix[i][j];
 		}
 	}
-	return arr;
+	Matrix matrix(height, width, arr);
+	return matrix;
 }
 
-double** Matrix::operator-(Matrix& obj) {
+Matrix& Matrix::operator-(Matrix& obj) {
 	double** arr = createArr(height, width);
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			arr[i][j] = matrix[i][j] - obj.matrix[i][j];
+			arr[i][j] = this->matrix[i][j] - obj.matrix[i][j];
 		}
 	}
-	return arr;
+	Matrix matrix(height, width, arr);
+	return matrix;
 }
 
-double** Matrix::operator*(Matrix& obj) {
+Matrix& Matrix::operator*(Matrix& obj) {
 	if (width != obj.height) {
 		std::cout << "Умножение не возможно" << std::endl;
 		throw - 1;
@@ -102,23 +117,25 @@ double** Matrix::operator*(Matrix& obj) {
 				double res = 0;
 				int k = 0;
 				while (k < width) {
-					res += matrix[i][k] * obj.matrix[k][j];
+					res += this->matrix[i][k] * obj.matrix[k][j];
 					k++;
 				}
 				arr[i][j] = res;
 			}
 		}
-		return arr;
+		Matrix matrix(height, obj.width, arr);
+		return matrix;
 	}
 }
 
-double** Matrix::operator*(double x)
+Matrix& Matrix::operator*(double x)
 {
 	double** arr = createArr(height, width);
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
-			arr[i][j] = matrix[i][j] * x;
+			arr[i][j] = this->matrix[i][j] * x;
 		}
 	}
-	return arr;
+	Matrix matrix(height, width, arr);
+	return matrix;
 }

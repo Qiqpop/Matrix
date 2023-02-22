@@ -14,24 +14,22 @@ int main() {
 		}
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
-				cin >> arr[i][j];
+				arr[i][j] = i + j;
 			}
 		}
 		Matrix matrix1(n, m, arr);
+		cin >> n >> m;
 		for (int i = 0; i < n; i++) {
 			delete[]arr[i];
 		}
 		delete[]arr;
-		int n3 = n;
-		cin >> n >> m;
-		int m3 = m;
 		arr = new double* [n];
 		for (int i = 0; i < n; i++) {
 			arr[i] = new double[m];
 		}
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
-				cin >> arr[i][j];
+				arr[i][j] = i + j;
 			}
 		}
 		Matrix matrix2(n, m, arr);
@@ -39,7 +37,8 @@ int main() {
 			delete[]arr[i];
 		}
 		delete[]arr;
-		Matrix matrix3(n3, m3, matrix1 * matrix2);
+		Matrix matrix3(5 * matrix2);
+		matrix2.printMatrix();
 		matrix3.printMatrix();
 		return 0;
 	}
