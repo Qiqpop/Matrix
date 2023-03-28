@@ -2,7 +2,7 @@ class Matrix
 {
 public:
 	friend double** createArr(int n, int m);
-	Matrix(int n, int m, double** arr);
+	Matrix(int n = 0, int m = 0, double** arr = {});
 	Matrix(Matrix& obj);
 	//~Matrix();
 	void printMatrix();
@@ -14,7 +14,11 @@ public:
 	Matrix& operator*(Matrix& obj);
 	Matrix& operator*(double x);
 	friend Matrix& operator*(double x, Matrix& matrix);
-private:
+	int getHeight();
+	int getWidth();
+	double getElement(int i, int j);
+	void setElement(int i, int j, double x);
+protected:
 	int height;
 	int width;
 	double** matrix;

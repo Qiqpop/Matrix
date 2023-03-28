@@ -139,3 +139,23 @@ Matrix& Matrix::operator*(double x)
 	Matrix matrix(height, width, arr);
 	return matrix;
 }
+
+int Matrix::getHeight()
+{
+	return height;
+}
+
+int Matrix::getWidth()
+{
+	return width;
+}
+
+double Matrix::getElement(int i, int j)
+{
+	return this->matrix[i][j];
+}
+
+void Matrix::setElement(int i, int j, double x)
+{
+	matrix[i][j] = x;
+}
