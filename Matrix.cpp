@@ -33,7 +33,7 @@ Matrix::Matrix(int n, int m, double** arr) {
 	}
 }
 
-Matrix::Matrix(Matrix& obj) {
+Matrix::Matrix(const Matrix& obj) {
 	height = obj.height;
 	width = obj.width;
 	matrix = createArr(height, width);

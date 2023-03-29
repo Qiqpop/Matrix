@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-#include "Matrix.h"
+#include "SLAE.h"
 
 using namespace std;
 
@@ -22,7 +22,7 @@ int main() {
 			cin >> arr[i][0];
 		}
 		Matrix matrix2(n, 1, arr);
-		Matrix matrix3(Gauss(matrix1, matrix2));
+		Matrix matrix3 = Gauss(matrix1,matrix2);
 		matrix3.printMatrix();
 		return 0;
 	}

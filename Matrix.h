@@ -1,9 +1,8 @@
 class Matrix
 {
 public:
-	friend double** createArr(int n, int m);
 	Matrix(int n = 0, int m = 0, double** arr = {});
-	Matrix(Matrix& obj);
+	Matrix(const Matrix& obj);
 	//~Matrix();
 	void printMatrix();
 	void rearrangingColumns(int a, int b);
