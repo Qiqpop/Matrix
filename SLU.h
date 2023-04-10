@@ -61,7 +61,10 @@ Matrix Gauss(Matrix A, Matrix B) {
 		}
 		k--;
 	} while (k > 0);
-	Matrix matrix(height, width, tmp);
+	for (int i = 0; i < height; i++) {
+		tmp[i][0] = tmp[i][width - 1];
+	}
+	Matrix matrix(height, 1, tmp);
 	return matrix;
 }
 
