@@ -1,4 +1,4 @@
-#include "Matrix.h"
+п»ї#include "Matrix.h"
 #include <cmath>
 
 
@@ -97,14 +97,14 @@ Matrix SquareRoots(Matrix A, Matrix B) {
 		s[i] = new double[n + 1];
 	}
 
-	//Находим 1 строку матрицы Uт
+	//РќР°С…РѕРґРёРј 1 СЃС‚СЂРѕРєСѓ РјР°С‚СЂРёС†С‹ UС‚
 	d[1] = signum(a[1][1]);
 	s[1][1] = sqrt(abs(a[1][1]));
 	for (int j = 2; j <= n; j++) {
 		s[1][j] = a[1][j] / (s[1][1] * d[1]);
 	}
 
-	//Находим верхне треугольную матрицу Uт
+	//РќР°С…РѕРґРёРј РІРµСЂС…РЅРµ С‚СЂРµСѓРіРѕР»СЊРЅСѓСЋ РјР°С‚СЂРёС†Сѓ UС‚
 	for (int i = 2; i <= n; i++) {
 		double sum = 0;
 		for (int k = 1; k <= i - 1; k++) {
@@ -127,7 +127,7 @@ Matrix SquareRoots(Matrix A, Matrix B) {
 	double* y = new double[n + 1];
 	y[1] = b[1] / (s[1][1] * d[1]);
 
-	//Прямой ход, нахождения вектора y
+	//РџСЂСЏРјРѕР№ С…РѕРґ, РЅР°С…РѕР¶РґРµРЅРёСЏ РІРµРєС‚РѕСЂР° y
 	for (int i = 2; i <= n; i++) {
 		double sum = 0;
 
@@ -141,7 +141,7 @@ Matrix SquareRoots(Matrix A, Matrix B) {
 
 	x[n] = y[n] / s[n][n];
 
-	//Обратный ход, нахождение ответа, вектора x
+	//РћР±СЂР°С‚РЅС‹Р№ С…РѕРґ, РЅР°С…РѕР¶РґРµРЅРёРµ РѕС‚РІРµС‚Р°, РІРµРєС‚РѕСЂР° x
 	for (int i = n - 1; i >= 1; i--) {
 		double sum = 0;
 
