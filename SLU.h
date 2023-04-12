@@ -163,3 +163,136 @@ Matrix SquareRoots(Matrix A, Matrix B) {
 	delete[]tmp;
 	return matrix;
 }
+
+double normaX(Matrix X) {
+	double sum = 0;
+	for (int i = 0; i < X.getHeight(); i++) {
+		sum += abs(X.getElement(i, 0));
+	}
+	return sqrt(sum);
+}
+
+Matrix SimpleIteration(Matrix A, Matrix B, double eps) {
+	int height = A.getHeight();
+	for (int i = 0; i < height; i++) {
+		double sum = 0;
+		for (int j = 0; j < height; j++) {
+			if (j != i) {
+				sum += abs(A.getElement(i, j));
+			}
+		}
+		if (sum > abs(A.getElement(i, i))) {
+			throw -1;
+		}
+	}
+	double** c = new double* [height];
+	for (int i = 0; i < height; i++) {
+		c[i] = new double[height];
+	}
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < height; j++)
+		{
+			c[i][j] = -(A.getElement(i, j) / A.getElement(i, i));
+		}
+		c[i][i] = 0;
+	}
+	double** d = new double*[height];
+	for (int i = 0; i < height; i++) {
+		d[i] = new double[height];
+	}
+	for (int i = 0; i < height; i++)
+	{
+		d[i][0] = B.getElement(i, 0)/A.getElement(i, i);
+	}
+	Matrix C(height, height, c);
+	Matrix D(height, 1, d);
+	Matrix X0 = B;
+	Matrix X1 = C * X0 + D;
+	while (abs(normaX(X0) - normaX(X1)) > eps)
+	{
+		X0 = X1;
+		X1 = C * X0 + D;
+	}
+	return X1;
+}
+
+double TMNN(Matrix R0, Matrix Ar0) {
+	int n = R0.getHeight();
+	double t1 = 0, t2 = 0;
+	for (int i = 0; i < n; i++) {
+		t1 += R0.getElement(i, 0) * Ar0.getElement(i, 0);
+	}
+	for (int i = 0; i < n; i++) {
+		t2 += Ar0.getElement(i, 0) * Ar0.getElement(i, 0);
+	}
+	return t1 / t2;
+}
+
+double norma(Matrix X) {
+	int n = X.getHeight();
+	double sum = 0;
+	for (int i = 0; i < n; i++) {
+		sum += X.getElement(i, 0) * X.getElement(i, 0);
+	}
+	return sqrt(sum);
+}
+
+Matrix MMN(Matrix A, Matrix B, double eps) {
+	int n = A.getHeight();
+	int iter = 1;
+
+	Matrix X0(B);
+	Matrix R0 = A * B;
+	R0 = R0 - B;
+	Matrix Ar0 = A * R0;
+	double T1 = 0;
+	T1 = TMNN(R0, Ar0);
+	Matrix TAr0 = Ar0 * T1;
+	Matrix R1 =  R0 - TAr0;
+	do {
+		R0 = R1;
+		iter++;
+		Ar0 = A * R0;
+		T1 = TMNN(R0, Ar0);
+		TAr0 = Ar0 * T1;
+		R1 = R0 - TAr0;
+	} while (norma(R1) > eps);
+	std::cout << iter << std::endl;
+	return R1;
+}
+
+double TMSS(Matrix R0, Matrix Ar0) {
+	int n = R0.getHeight();
+	double t1 = 0, t2 = 0;
+	for (int i = 0; i < n; i++) {
+		t1 += R0.getElement(i, 0) * R0.getElement(i, 0);
+	}
+	for (int i = 0; i < n; i++) {
+		t2 += Ar0.getElement(i, 0) * R0.getElement(i, 0);
+	}
+	return t1 / t2;
+}
+
+Matrix MSS(Matrix A, Matrix B, double eps) {
+	int n = A.getHeight();
+	int iter = 1;
+
+	Matrix X0(B);
+	Matrix R0 = A * B;
+	R0 = R0 - B;
+	Matrix Ar0 = A * R0;
+	double T1 = 0;
+	T1 = TMSS(R0, Ar0);
+	Matrix TAr0 = Ar0 * T1;
+	Matrix R1 = R0 - TAr0;
+	do {
+		R0 = R1;
+		iter++;
+		Ar0 = A * R0;
+		T1 = TMSS(R0, Ar0);
+		TAr0 = Ar0 * T1;
+		R1 = R0 - TAr0;
+	} while (norma(R1) > eps);
+	std::cout << iter << std::endl;
+	return R1;
+}

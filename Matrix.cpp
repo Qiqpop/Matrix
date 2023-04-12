@@ -83,7 +83,7 @@ Matrix& Matrix::transposition() {
 	return matrix;
 }
 
-Matrix& Matrix::operator+(Matrix& obj) {
+Matrix Matrix::operator+(const Matrix& obj) {
 	double** arr = createArr(height, width);
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
@@ -94,7 +94,7 @@ Matrix& Matrix::operator+(Matrix& obj) {
 	return matrix;
 }
 
-Matrix& Matrix::operator-(Matrix& obj) {
+Matrix Matrix::operator-(const Matrix& obj) {
 	double** arr = createArr(height, width);
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
@@ -105,7 +105,7 @@ Matrix& Matrix::operator-(Matrix& obj) {
 	return matrix;
 }
 
-Matrix& Matrix::operator*(Matrix& obj) {
+Matrix Matrix::operator*(const Matrix& obj) {
 	if (width != obj.height) {
 		std::cout << "Умножение не возможно" << std::endl;
 		throw - 1;
@@ -128,7 +128,7 @@ Matrix& Matrix::operator*(Matrix& obj) {
 	}
 }
 
-Matrix& Matrix::operator*(double x)
+Matrix Matrix::operator*(double x)
 {
 	double** arr = createArr(height, width);
 	for (int i = 0; i < height; i++) {

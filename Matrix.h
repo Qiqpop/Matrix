@@ -8,10 +8,10 @@ public:
 	void rearrangingColumns(int a, int b);
 	void rearrangingRows(int a, int b);
 	Matrix& transposition();
-	Matrix& operator+(Matrix& obj);
-	Matrix& operator-(Matrix& obj);
-	Matrix& operator*(Matrix& obj);
-	Matrix& operator*(double x);
+	Matrix operator+(const Matrix& obj);
+	Matrix operator-(const Matrix& obj);
+	Matrix operator*(const Matrix& obj);
+	Matrix operator*(double x);
 	friend Matrix& operator*(double x, Matrix& matrix);
 	int getHeight();
 	int getWidth();
